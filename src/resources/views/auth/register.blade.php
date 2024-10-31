@@ -12,12 +12,9 @@
   <form class="form" action="/register" method="post">
     @csrf
     <div class="form__group">
-      <div class="form__group-title">
-        <span class="form__label--item">お名前</span>
-      </div>
       <div class="form__group-content">
         <div class="form__input--text">
-          <input type="text" name="name" value="{{ old('name') }}" />
+          <input type="text" name="name" value="{{ old('name') }}" placeholder="名前">
         </div>
         <div class="form__error">
           @error('name')
@@ -27,12 +24,9 @@
       </div>
     </div>
     <div class="form__group">
-      <div class="form__group-title">
-        <span class="form__label--item">メールアドレス</span>
-      </div>
       <div class="form__group-content">
         <div class="form__input--text">
-          <input type="email" name="email" value="{{ old('email') }}" />
+          <input type="email" name="email" value="{{ old('email') }}" placeholder="メールアドレス">
         </div>
         <div class="form__error">
           @error('email')
@@ -42,12 +36,9 @@
       </div>
     </div>
     <div class="form__group">
-      <div class="form__group-title">
-        <span class="form__label--item">パスワード</span>
-      </div>
       <div class="form__group-content">
         <div class="form__input--text">
-          <input type="password" name="password" />
+          <input type="password" name="password" placeholder="パスワード">
         </div>
         <div class="form__error">
           @error('password')
@@ -57,12 +48,9 @@
       </div>
     </div>
     <div class="form__group">
-      <div class="form__group-title">
-        <span class="form__label--item">確認用パスワード</span>
-      </div>
       <div class="form__group-content">
         <div class="form__input--text">
-          <input type="password" name="password_confirmation" />
+          <input type="password" name="password_confirmation" placeholder="確認用パスワード">
         </div>
       </div>
     </div>
@@ -70,8 +58,15 @@
       <button class="form__button-submit" type="submit">登録</button>
     </div>
   </form>
+  <div class="login__content">
+      <div class="login__item">
+        <p class="login__item-text">
+          アカウントをお持ちの方はこちらから
+        </p>
+      </div>
+    </div>
   <div class="login__link">
-    <a class="login__button-submit" href="/login">ログインの方はこちら</a>
+    <a class="login__button-submit" href="/login">ログイン</a>
   </div>
 </div>
 @endsection
