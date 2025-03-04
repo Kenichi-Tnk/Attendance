@@ -6,7 +6,7 @@
 
 @section('content')
     <h1 class="title">ログイン</h1>
-    <form class="form-content" action="{{ route('login') }}" method="POST">
+    <form class="form-content" action="{{ route('login.post') }}" method="POST">
         @csrf
         <label class="form-content__label" for="email">メールアドレス
             <input class="form-content__input" type="email" name="email" value="{{ old('email') }}">

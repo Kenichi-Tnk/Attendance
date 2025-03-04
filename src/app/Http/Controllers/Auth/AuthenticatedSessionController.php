@@ -29,11 +29,18 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt[$credentials]) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            // 管理者の場合はダッシュボードにリダイレクト
+            if (Auth::user()->is_admin) {
+                return redirect()->intended('/admin/dashboard');
+            }
+
+            // 一般ユーザーの場合は勤怠登録画面にリダイレクト
+            return redirect()->intended('/attendances/create');
         }
+
 
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません',
