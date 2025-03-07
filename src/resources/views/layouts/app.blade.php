@@ -22,7 +22,7 @@
                             <li><a href="{{ route('admin.attendance.index') }}">勤怠一覧</a></li>
                             <li><a href="{{ route('admin.staff.index') }}">スタッフ一覧</a></li>
                             <li><a href="{{ route('admin.corrects.index') }}">申請一覧</a></li>
-                        @else
+                        @else (Auth::check())
                             <!-- スタッフ用リンク -->
                             <li><a href="{{ route('attendance.create') }}">勤怠</a></li>
                             <li><a href="{{ route('attendance.index') }}">勤怠一覧</a></li>

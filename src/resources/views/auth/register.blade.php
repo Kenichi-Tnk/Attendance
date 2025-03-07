@@ -6,7 +6,7 @@
 
 @section('content')
     <h1 class="title">会員登録</h1>
-    <form action="{{ route('register') }}" method="POST">
+    <form class="form-content" action="{{ route('register') }}" method="POST">
         @csrf
         <label class="form-content__label" for="name">名前
             <input class="form-content__input" type="text" id="name" name="name" value="{{ old('name') }}">

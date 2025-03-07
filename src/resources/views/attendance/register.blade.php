@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance-register.css') }}">
 @endsection
 
 @section('content')
-    <h1 class="title">勤怠登録</h1>
-    <p>ステータス: {{ $attendance ? $attendance->status : '出勤外' }}</p>
-    <p>日付: {{ now()->toDateString() }}</p>
-    <p>現在の時間: {{ now()->format('H:i') }}</p>
+    <div class="attendance-info">
+        <p class="attendance-info__status">{{ $attendance ? $attendance->status : '出勤外' }}</p>
+        <p class="attendance-info__date">{{ now()->format('Y年m月d日') }}（{{ ['日', '月', '火', '水', '木', '金', '土'][now()->dayOfWeek] }}) </p>
+        <p class="attendance-info__time">{{ now()->format('H:i') }}</p>
+    </div>
 
     @if (!$attendance || $attendance->status == 'not_started')
         <form action="{{ route('attendance.store') }}" method="POST" class="form-content">

@@ -1,4 +1,3 @@
-<?php
 @extends('layouts.app')
 
 @section('css')
@@ -7,12 +6,22 @@
 
 @section('content')
     <h1 class="title">勤怠一覧</h1>
+
+    <div class="pagination">
+        <a href="#" class="pagination__link">&lt;-前月</a>
+        <span class="pagination__current">{{ now()->format('Y/m') }}</span>
+        <a href="#" class="pagination__link">翌月-&gt;</a>
+    </div>
+
     <table class="attendance-table">
         <thead>
             <tr>
                 <th>日付</th>
-                <th>出勤時間</th>
-                <th>退勤時間</th>
+                <th>出勤</th>
+                <th>退勤</th>
+                <th>休憩</th>
+                <th>合計</th>
+                <th>詳細</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +30,9 @@
                     <td>{{ $attendance->date }}</td>
                     <td>{{ $attendance->clock_in }}</td>
                     <td>{{ $attendance->clock_out }}</td>
+                    <td>{{ $attendance->break_time }}</td>
+                    <td>{{ $attendance->total_time }}</td>
+                    <td><a href="{{ route('attendance.show', $attendance->id) }}">詳細</a></td>
                 </tr>
             @endforeach
         </tbody>

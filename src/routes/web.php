@@ -21,12 +21,17 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
+//トップページをログイン画面にリダイレクト
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 //会員登録画面のルート
 Route::get('register', [RegisterUserController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterUserController::class, 'store']);
 
 //トップページをログイン画面に設定
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login.post');
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 

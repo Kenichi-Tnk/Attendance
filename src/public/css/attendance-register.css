@@ -1,0 +1,65 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem; /* 上に寄せるためのパディングを追加 */
+    padding-bottom: 2rem; /* 必要に応じて下にもパディングを追加 */
+}
+
+.attendance-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attendance-info__status {
+    font-size: 1rem; /* 小 */
+    margin: 0.5rem 0;
+}
+
+.attendance-info__date {
+    font-size: 2rem; /* 中 */
+    margin: 0.5rem 0;
+}
+
+.attendance-info__time {
+    font-size: 3.5rem; /* 大 */
+    margin: 0.5rem 0;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-content__button {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-content__button-submit {
+    padding: 0.5rem 1rem;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-content__button-submit:hover {
+    background-color: #333;
+}
