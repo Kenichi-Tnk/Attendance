@@ -11,7 +11,7 @@ main {
     justify-content: center;
     align-items: center;
     padding-top: 2rem; /* 上に寄せるためのパディングを追加 */
-    padding-bottom: 2rem; /* 必要に応じて下にもパディングを追加 */
+    padding-bottom: 20rem; /* 必要に応じて下にもパディングを追加 */
 }
 
 .attendance-info {
@@ -46,17 +46,17 @@ main {
 .form-content__button {
     margin-top: 1rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 100px;
 }
 
 .form-content__button-submit {
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     background-color: #000;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
-    width: 100%;
+    width: 120%;
     box-sizing: border-box;
 }
 

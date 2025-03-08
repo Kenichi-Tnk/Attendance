@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 @endsection
 
 @section('content')
@@ -9,7 +10,9 @@
 
     <div class="pagination">
         <a href="#" class="pagination__link">&lt;-前月</a>
-        <span class="pagination__current">{{ now()->format('Y/m') }}</span>
+        <span class="pagination__current">
+            <i class="fas fa-calendar-alt"></i> <!--カレンダーアイコン追加 -->
+            {{ now()->format('Y/m') }}</span>
         <a href="#" class="pagination__link">翌月-&gt;</a>
     </div>
 

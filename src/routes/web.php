@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CorrectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,6 +55,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendances/{id}', [UserController::class, 'getAttendanceDetail'])->name('user.attendance_detail');
     Route::post('/attendances/{id}/request-correction', [UserController::class, 'requestCorrection'])->name('user.request_correction');
     Route::get('/corrects', [CorrectController::class, 'index'])->name('corrects.index');
+
+    //申請関連のルート
+    Route::resource('corrects', CorrectController::class);
 });
 
 // メール送信テストのルート
