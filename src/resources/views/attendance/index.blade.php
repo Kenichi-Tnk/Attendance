@@ -30,10 +30,10 @@
         <tbody>
             @foreach ($attendances as $attendance)
                 <tr>
-                    <td>{{ $attendance->date }}</td>
+                    <td>{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][\Carbon\Carbon::parse($attendance->date)->dayOfWeek] }})</td>
                     <td>{{ $attendance->clock_in }}</td>
                     <td>{{ $attendance->clock_out }}</td>
-                    <td>{{ $attendance->break_time }}</td>
+                    <td>{{ $attendance->rest_time }}</td>
                     <td>{{ $attendance->total_time }}</td>
                     <td><a href="{{ route('attendance.show', $attendance->id) }}">詳細</a></td>
                 </tr>

@@ -43,6 +43,7 @@ Route::post('email/verification-notification', [EmailVerificationNotificationCon
 
 //ログイン後のルート
 Route::middleware(['auth'])->group(function () {
+    Route::resource('attendance', AttendanceController::class);
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
