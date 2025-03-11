@@ -23,6 +23,20 @@ class AttendanceController extends Controller
 
     public function create()
     {
+        // 前日の勤怠記録を確認し、退勤打刻がされていない場合は自動的に退勤時間を設定する
+        $previousAttendance = Attendance::where('user_id', Auth::id())
+        ->whereDate('date', '<', now()->toDateString())
+        ->where('status', 'working')
+        ->first();
+
+        if ($previousAttendance) {
+            $previousAttendance->update([
+                'status' => 'finished',
+                'clock_out' => '23:59:59', // 退勤打刻がされていない場合のデフォルト退勤時間
+            ]);
+        }
+
+        //当日の勤怠記録を取得
         $attendance = Attendance::where('user_id', Auth::id())->whereDate('date', now()->toDateString())->first();
         return view('attendance.register', compact('attendance'));
     }

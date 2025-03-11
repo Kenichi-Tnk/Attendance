@@ -42,7 +42,7 @@ Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'
 Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
 
 //ログイン後のルート
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');

@@ -6,7 +6,28 @@
 
 @section('content')
     <div class="attendance-info">
-        <p class="attendance-info__status">{{ $attendance ? $attendance->status : '出勤外' }}</p>
+        <p class="attendance-info__status">
+            @if (!$attendance)
+                勤務外
+            @else
+                @switch($attendance->status)
+                    @case('not_started')
+                        勤務外
+                        @break
+                    @case('working')
+                        出勤中
+                        @break
+                    @case('on_break')
+                        休憩中
+                        @break
+                    @case('finished')
+                        退勤済
+                        @break
+                    @default
+                        勤務外
+                @endswitch
+            @endif
+        </p>
         <p class="attendance-info__date">{{ now()->format('Y年m月d日') }}（{{ ['日', '月', '火', '水', '木', '金', '土'][now()->dayOfWeek] }}) </p>
         <p class="attendance-info__time">{{ now()->format('H:i') }}</p>
     </div>
