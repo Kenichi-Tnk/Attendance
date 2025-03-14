@@ -20,6 +20,16 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Show the admin login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAdminLoginForm()
+    {
+        return view('auth.admin-login');
+    }
+
+    /**
      * Handle an incoming authentication request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -32,15 +42,21 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // 管理者の場合はダッシュボードにリダイレクト
-            if (Auth::user()->is_admin) {
-                return redirect()->intended('/admin/dashboard');
+            // 管理者ログインの場合
+            if ($request->is('admin/login')) {
+                if (Auth::user()->is_admin) {
+                    return redirect()->intended(route('admin.attendance.index'));
+                } else {
+                    Auth::logout();
+                    return redirect()->route('admin.login')->withErrors([
+                        'email' => '管理者として認証されていません。',
+                    ]);
+                }
             }
 
-            // 一般ユーザーの場合は勤怠登録画面にリダイレクト
+            // 一般ユーザーの場合
             return redirect()->intended('/attendances/create');
         }
-
 
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません',

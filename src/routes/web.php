@@ -8,6 +8,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CorrectController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminAttendanceController;
+use App\Http\Controllers\Admin\AdminStaffController;
+use App\Http\Controllers\Admin\AdminCorrectsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
@@ -41,6 +46,11 @@ Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'
 Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
 
+// 管理者用ログインルート
+Route::get('admin/login', [AuthenticatedSessionController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('admin/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
+
 //ログイン後のルート
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
@@ -59,6 +69,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //申請関連のルート
     Route::resource('corrects', CorrectController::class);
+});
+
+//管理者用のルート
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/attendance', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
+    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show'); // 仮組みの詳細画面ルート
+    Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
+    Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show'); // 仮組みの詳細画面ルート
+    Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');
+    // 他の管理者用ルートを追加
 });
 
 // メール送信テストのルート

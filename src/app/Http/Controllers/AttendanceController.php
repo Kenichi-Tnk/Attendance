@@ -26,10 +26,21 @@ class AttendanceController extends Controller
         // 前日の勤怠記録を確認し、退勤打刻がされていない場合は自動的に退勤時間を設定する
         $previousAttendance = Attendance::where('user_id', Auth::id())
         ->whereDate('date', '<', now()->toDateString())
-        ->where('status', 'working')
+        ->whereIn('status', ['working', 'on_break'])
         ->first();
 
         if ($previousAttendance) {
+            // 休憩中の場合、休憩を終了する
+            if ($previousAttendance->status == 'on_break') {
+                $rest = $previousAttendance->rests()->whereNull('rest_end')->first();
+                if ($rest) {
+                    $rest->update([
+                        'rest_end' => '23:59:59',
+                    ]);
+                }
+            }
+
+             // 勤怠記録を更新
             $previousAttendance->update([
                 'status' => 'finished',
                 'clock_out' => '23:59:59', // 退勤打刻がされていない場合のデフォルト退勤時間
