@@ -75,9 +75,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/attendance', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
-    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show'); // 仮組みの詳細画面ルート
+    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show'); // 詳細画面ルート
+    Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update'); // 勤怠詳細更新
     Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
     Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show'); // 仮組みの詳細画面ルート
+    Route::get('/admin/staff/{id}/csv', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.csv'); // CSV出力
     Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');
     // 他の管理者用ルートを追加
 });
