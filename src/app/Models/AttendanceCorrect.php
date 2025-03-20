@@ -12,9 +12,12 @@ class AttendanceCorrect extends Model
     protected $fillable = [
         'user_id',
         'attendance_id',
-        'type',
-        'requested_time',
-        'reason',
+        'date',
+        'clock_in',
+        'clock_out',
+        'rest_start',
+        'rest_end',
+        'note',
         'status',
     ];
 

@@ -27,6 +27,11 @@ class Attendance extends Model
         return $this->hasMany(Rest::class);
     }
 
+    public function corrects()
+    {
+        return $this->hasMany(Correct::class);
+    }
+
     public function getRestTimeAttribute()
     {
         $totalRestTime = 0;

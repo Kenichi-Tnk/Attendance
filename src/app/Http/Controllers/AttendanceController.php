@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\AttendanceCorrect;
 use App\Models\Rest;
+use App\Http\Requests\AttendanceCorrectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,8 +19,25 @@ class AttendanceController extends Controller
 
     public function show($id)
     {
-        $attendance = Attendance::findOrFail($id);
+        $attendance = Attendance::with('rests')->findOrFail($id);
         return view('attendance.show', compact('attendance'));
+    }
+
+    public function correct(AttendanceCorrectRequest $request, $id)
+    {
+        AttendanceCorrect::create([
+            'user_id' => auth()->id(),
+            'attendance_id' => $id,
+            'date' => Attendance::findOrFail($id)->date, // 勤怠データの日付を使用
+            'clock_in' => $request->clock_in,
+            'clock_out' => $request->clock_out,
+            'rest_start' => $request->rest_start,
+            'rest_end' => $request->rest_end,
+            'note' => $request->note,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('attendance.show', $id)->with('success', '修正申請が送信されました。');
     }
 
     public function create()

@@ -51,14 +51,15 @@ Route::get('admin/login', [AuthenticatedSessionController::class, 'showAdminLogi
 Route::post('admin/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 
-//ログイン後のルート
+//ユーザー用ルート
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
-    Route::get('/attendances/{attendance}', [AttendanceController::class, 'show'])->name('attendance.show');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
+    Route::post('/attendance/{id}/correct', [AttendanceController::class, 'correct'])->name('attendance.correct');
 
     Route::get('/clock', [UserController::class, 'showClockPage'])->name('user.clock');
     Route::post('/attendances/clock-in', [UserController::class, 'clockIn'])->name('user.clock_in');
@@ -80,7 +81,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
     Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show'); // 仮組みの詳細画面ルート
     Route::get('/admin/staff/{id}/csv', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.csv'); // CSV出力
-    Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');
+    Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');//修正申請一覧
+    Route::get('/admin/corrects/{id}', [AdminCorrectsController::class, 'show'])->name('admin.corrects.show');//修正申請詳細
+    Route::post('/admin/corrects/{id}/approve', [AdminCorrectsController::class, 'approve'])->name('admin.corrects.approve');//修正申請承認
     // 他の管理者用ルートを追加
 });
 

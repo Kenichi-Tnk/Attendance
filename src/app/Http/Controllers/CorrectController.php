@@ -50,7 +50,7 @@ class CorrectController extends Controller
     public function edit($id)
     {
         $request = AttendanceCorrect::findOrFail($id);
-        return view('corrects.edit', compoact('request'));
+        return view('corrects.edit', compact('request'));
     }
 
     public function update(Request $request, $id)
@@ -67,14 +67,5 @@ class CorrectController extends Controller
     ]);
 
     return redirect()->route('corrects.index')->with('success', '勤怠修正申請を更新しました');
-    }
-
-    public function destroy($id)
-    {
-        //申請の削除
-        $correctRequest = AttendanceCorrect::findOrFail($id);
-        $correctRequest->delete();
-
-        return redirect()->route('corrects.index')->with('success', '勤怠修正申請を削除しました');
     }
 }

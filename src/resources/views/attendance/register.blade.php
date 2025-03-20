@@ -37,33 +37,35 @@
             @csrf
             <input type="hidden" name="status" value="working">
             <div class="form-content__button">
-                <button class="form-content__button-submit" type="submit">出勤</button>
+                <button class="form-content__button-submit--black" type="submit">出勤</button>
             </div>
         </form>
     @elseif ($attendance->status == 'working')
-        <form action="{{ route('attendance.update', $attendance->id) }}" method="POST" class="form-content">
+        <form class="form-content" action="{{ route('attendance.update', $attendance->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <input type="hidden" name="status" value="on_break">
-            <div class="form-content__button">
-                <button class="form-content__button-submit" type="submit">休憩入</button>
-            </div>
-        </form>
-        <form action="{{ route('attendance.update', $attendance->id) }}" method="POST" class="form-content">
-            @csrf
-            @method('PUT')
-            <input type="hidden" name="status" value="finished">
-            <div class="form-content__button">
-                <button class="form-content__button-submit" type="submit">退勤</button>
+            <div class="form-content__button-group">
+                <!-- 退勤ボタン -->
+                <div class="form-content__button">
+                    <input type="hidden" name="status" value="finished">
+                    <button class="form-content__button-submit--black" type="submit">退勤</button>
+                </div>
+                <!-- 休憩ボタン -->
+                <div class="form-content__button">
+                    <input type="hidden" name="status" value="on_break">
+                    <button class="form-content__button-submit--white" type="submit">休憩入</button>
+                </div>
             </div>
         </form>
     @elseif ($attendance->status == 'on_break')
-        <form action="{{ route('attendance.update', $attendance->id) }}" method="POST" class="form-content">
+        <form class="form-content" action="{{ route('attendance.update', $attendance->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <input type="hidden" name="status" value="working">
-            <div class="form-content__button">
-                <button class="form-content__button-submit" type="submit">休憩戻</button>
+            <div class="form-content__button-group">
+                <div class="form-content__button">
+                    <input type="hidden" name="status" value="working">
+                    <button class="form-content__button-submit--white" type="submit">休憩戻</button>
+                </div>
             </div>
         </form>
     @elseif ($attendance->status == 'finished')

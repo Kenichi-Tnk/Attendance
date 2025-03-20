@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->attributes['is_admin'] ?? false;
     }
+
+    public function corrects()
+    {
+        return $this->hasMany(Correct::class);
+    }
 }
