@@ -28,7 +28,7 @@
                     <td>{{ $request->status }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->attendance->date }}</td>
-                    <td>{{ $request->reason }}</td>
+                    <td>{{ $request->note }}</td>
                     <td>{{ $request->created_at }}</td>
                     <td><a href="{{ route('attendance.show', $request->attendance->id) }}">詳細</a></td>
                 </tr>

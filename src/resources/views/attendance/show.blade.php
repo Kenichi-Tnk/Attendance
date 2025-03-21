@@ -42,12 +42,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="rest_start">休憩</label>
-            <div class="d-flex">
-                <input type="time" class="form-control" id="rest_start" name="rest_start" value="{{ $attendance->rests->first() ? \Carbon\Carbon::parse($attendance->rests->first()->rest_start)->format('H:i') : '' }}">
-                <span class="mx-2">〜</span>
-                <input type="time" class="form-control" id="rest_end" name="rest_end" value="{{ $attendance->rests->first() ? \Carbon\Carbon::parse($attendance->rests->first()->rest_end)->format('H:i') : '' }}">
-            </div>
+            @forelse ($attendance->rests as $index => $rest)
+                <div class="d-flex">
+                    <label for="rest_start">{{ $index === 0 ? '休憩' : '休憩' . $index }}</label>
+                    <input type="time" class="form-control" id="rest_start_{{ $index }}" name="rests[{{ $index }}][rest_start]" value="{{ $rest->rest_start ? \Carbon\Carbon::parse($rest->rest_start)->format('H:i') : '' }}">
+                    <span class="mx-2">〜</span>
+                    <input type="time" class="form-control" id="rest_end_{{ $index }}" name="rests[{{ $index }}][rest_end]" value="{{ $rest->rest_end ? \Carbon\Carbon::parse($rest->rest_end)->format('H:i') : '' }}">
+                </div>
+            @empty
+                <p>休憩データがありません</p>
+            @endforelse
         </div>
         <div class="form-group">
             <label for="note">備考</label>

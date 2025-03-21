@@ -15,6 +15,8 @@ class CorrectController extends Controller
             ->where('status', $status)
             ->get();
 
+            //dd($requests);
+
         return view('corrects.index', compact('requests'));
     }
 
