@@ -29,7 +29,7 @@ class Attendance extends Model
 
     public function corrects()
     {
-        return $this->hasMany(Correct::class);
+        return $this->hasMany(AttendanceCorrect::class);
     }
 
     public function getRestTimeAttribute()
@@ -73,5 +73,10 @@ class Attendance extends Model
         }
 
         return $totalRestTime;
+    }
+
+    public function isPendingApproval()
+    {
+        return $this->corrects()->where('status', 'pending')->exists();
     }
 }

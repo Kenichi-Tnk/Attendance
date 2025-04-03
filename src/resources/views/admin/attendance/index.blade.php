@@ -9,7 +9,7 @@
     <div class="date-navigation">
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->subDay()->toDateString()]) }}" class="btn btn-secondary">前日</a>
         <span class="current-date">
-            <i class="fa fa-calendar"></i> {{ $date }}
+            <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($date)->format('Y/m/d') }}
         </span>
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->addDay()->toDateString()]) }}" class="btn btn-secondary">翌日</a>
     </div>

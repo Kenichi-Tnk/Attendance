@@ -1,11 +1,15 @@
-body {
+html,body {
     font-family: Arial, sans-serif;
+    height: 100%; /* htmlとbodyの高さを100%に設定 */
+    margin: 0; /* 余白をリセット */
+    padding: 0; /* 余白をリセット */
+    background-color: #f0eff2; /* 背景色を設定 */
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px; /* 必要に応じて幅を調整 */
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px;
 }
 
 header {

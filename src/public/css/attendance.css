@@ -1,9 +1,9 @@
-.body {
-    font-family: Arial, sans-serif;
+main {
+    background-color: #f0eff2;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -18,12 +18,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pagination__link {
+    font-size: 15px;
     text-decoration: none;
-    color: #007bff;
+    font-weight: bold;
+    color: gray;
+    display: flex;
+    align-items: center;
+}
+
+.pagination__link--prev::before {
+    content: "← ";
+    margin-right: 8px;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+.pagination__link--next::after {
+    content: " →";
+    margin-left: 8px;
+    font-size: 20px;
+    padding-right: 20px;
 }
 
 .pagination__link:hover {
@@ -38,6 +60,57 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    background-color: #fff;
+}
+
+.attendance-header {
+    background-color: #fff; /* 背景色を白に設定 */
+    border-radius: 8px; /* 角丸を追加 */
+    padding: 10px 20px; /* 内側の余白を追加 */
+    margin-bottom: 10px; /* 下に余白を追加 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し影を追加して立体感を出す */
+    font-weight: bold; /* 太字にする */
+    display: flex;
+    justify-content: space-between; /* 均等に配置 */
+    align-items: center; /* 垂直方向を中央揃え */
+}
+
+.attendance-header span,
+.attendance-row span {
+    flex: 1; /* 各要素を均等に配置 */
+    text-align: center; /* テキストを中央揃え */
+}
+
+.attendance-header span:first-child,
+.attendance-row span:first-child {
+    flex: 1; /* 日付部分を少し広くする */
+}
+
+.attendance-header span:last-child,
+.attendance-row span:last-child {
+    flex: 0.8; /* 詳細部分を少し狭くする */
+}
+
+
+.attendance-row {
+    background-color: #f9f9f9; /* 背景色を薄いグレーに設定 */
+    border: 1px solid #ddd; /* 境界線を追加 */
+    border-radius: 8px; /* 角丸を追加 */
+    padding: 10px 20px; /* 内側の余白を追加 */
+    margin-bottom: 1px; /* 下に余白を追加 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 少し影を追加 */
+    display: flex;
+    justify-content: space-between; /* 均等に配置 */
+    align-items: center; /* 垂直方向を中央揃え */
+}
+
+.attendance-row a {
+    color: #007bff; /* リンクの色 */
+    text-decoration: none; /* 下線を削除 */
+}
+
+.attendance-row a:hover {
+    text-decoration: underline; /* ホバー時に下線を表示 */
 }
 
 .attendance-table th,

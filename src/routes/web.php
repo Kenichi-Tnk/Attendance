@@ -57,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
-    Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+    Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
     Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
     Route::post('/attendance/{id}/correct', [AttendanceController::class, 'correct'])->name('attendance.correct');
 

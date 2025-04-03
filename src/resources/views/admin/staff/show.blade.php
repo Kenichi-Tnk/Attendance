@@ -9,7 +9,7 @@
     <div class="date-navigation">
         <a href="{{ route('admin.staff.show', ['id' => $user->id, 'month' => \Carbon\Carbon::parse($month)->subMonth()->format('Y-m')]) }}" class="btn btn-secondary">前月</a>
         <span class="current-date">
-            <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($month)->format('Y年m月') }}
+            <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($month)->format('Y/m') }}
         </span>
         <a href="{{ route('admin.staff.show', ['id' => $user->id, 'month' => \Carbon\Carbon::parse($month)->addMonth()->format('Y-m')]) }}" class="btn btn-secondary">翌月</a>
     </div>

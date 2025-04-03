@@ -11,10 +11,30 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::where('user_id', Auth::id())->get();
-        return view('attendance.index', compact('attendances'));
+        // 現在の月を取得（クエリパラメータがない場合は今月）
+        $currentMonth = $request->input('month', now()->format('Y-m'));
+
+        // Carbonを使用して前月と翌月を計算
+        $currentDate = \Carbon\Carbon::createFromFormat('Y-m', $currentMonth);
+        $previousMonth = $currentDate->copy()->subMonth()->format('Y-m');
+        $nextMonth = $currentDate->copy()->addMonth()->format('Y-m');
+
+        // 現在の月の勤怠データを取得
+        $attendances = Attendance::with('rests')
+            ->where('user_id', Auth::id())
+            ->whereYear('date', $currentDate->year)
+            ->whereMonth('date', $currentDate->month)
+            ->get();
+
+        // ビューにデータを渡す
+        return view('attendance.index', [
+            'attendances' => $attendances,
+            'currentMonth' => $currentDate->format('Y年m月'),
+            'previousMonth' => $previousMonth,
+            'nextMonth' => $nextMonth,
+        ]);
     }
 
     public function show($id)
@@ -93,16 +113,16 @@ class AttendanceController extends Controller
     {
         // バリデーション
         $request->validate([
-            'status' => 'required',
+            'status' => 'required|in:working,on_break,finished',
         ]);
 
-        // 勤怠記録の更新
+        // ステータスの更新
         $attendance->update([
             'status' => $request->status,
             'clock_out' => $request->status == 'finished' ? now()->toTimeString() : $attendance->clock_out,
         ]);
 
-        //休憩の記録
+        //休憩の処理
         if ($request->status == 'on_break') {
             Rest::create([
                 'attendance_id' => $attendance->id,

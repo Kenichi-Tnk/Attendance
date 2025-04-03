@@ -54,15 +54,15 @@ main {
 
 .form-content__button-group {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    max-width: 300px;
+    gap: 1rem;
     margin-top: 1rem;
 }
 
 .form-content__button {
-    flex: 1;
-    margin: 0 0.5rem;
+    flex: none;
+    width: 150px;
 }
 
 .form-content__button-submit--black {
@@ -72,7 +72,7 @@ main {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    width: 100%;
+    width: 150px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -84,11 +84,19 @@ main {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    width: 100%;
+    width: 150px;
     box-sizing: border-box;
     text-align: center;
 }
 
 .form-content__button-submit:hover {
     background-color: #333;
+}
+
+.attendance-info__finished {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 2rem;
 }
