@@ -9,28 +9,34 @@ body {
 }
 
 .title {
-    text-align: center;
-    margin-bottom: 1rem;
+    font-size: 24px; /* タイトルのフォントサイズを調整 */
+    font-weight: bold; /* タイトルを太字に */
+    margin: 40px 0;
 }
 
 .tabs {
     display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
+    justify-content: flex-start;
+    margin-bottom: 3rem;
+    gap: 100px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 5px;
+    padding-left: 40px
 }
 
 .tab {
-    padding: 10px 20px;
-    margin: 0 5px;
+    padding: 0;
+    margin: 0 ;
     text-decoration: none;
-    color: #007bff;
-    border: 1px solid #007bff;
-    border-radius: 4px;
+    color: #737373;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 .tab.active {
-    background-color: #007bff;
-    color: white;
+    color: black;
 }
 
 .requests-table {

@@ -30,4 +30,9 @@ class AttendanceCorrect extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
+
+    public function rests()
+    {
+        return $this->hasMany(Rest::class, 'attendance_id', 'attendance_id');
+    }
 }

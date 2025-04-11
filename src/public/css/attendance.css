@@ -63,6 +63,31 @@ main {
     background-color: #fff;
 }
 
+.tabs {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 3rem;
+    gap: 100px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 5px;
+    padding-left: 40px
+}
+
+.tab {
+    padding: 0;
+    margin: 0 ;
+    text-decoration: none;
+    color: #737373;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: black;
+}
+
 .attendance-header {
     background-color: #fff; /* 背景色を白に設定 */
     border-radius: 8px; /* 角丸を追加 */
@@ -73,6 +98,7 @@ main {
     display: flex;
     justify-content: space-between; /* 均等に配置 */
     align-items: center; /* 垂直方向を中央揃え */
+    color: #737373; /* テキストの色を薄いグレーに設定 */
 }
 
 .attendance-header span,
@@ -105,8 +131,12 @@ main {
 }
 
 .attendance-row a {
-    color: #007bff; /* リンクの色 */
+    color: #000; /* リンクの色 */
     text-decoration: none; /* 下線を削除 */
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 .attendance-row a:hover {

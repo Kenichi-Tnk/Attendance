@@ -9,16 +9,16 @@ use Illuminate\Http\Request;
 
 class AdminCorrectsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pendingCorrects = AttendanceCorrect::where('status', 'pending')->get();
-        $approvedCorrects = AttendanceCorrect::where('status', 'approved')->get();
-        return view('admin.corrects.index', compact('pendingCorrects', 'approvedCorrects'));
+        $status = $request->query('status', 'pending'); // デフォルトで承認待ち
+        $requests = AttendanceCorrect::where('status', $status)->get();
+        return view('admin.corrects.index', compact('requests'));
     }
 
     public function show($id)
     {
-        $correct = AttendanceCorrect::findOrFail($id);
+        $correct = AttendanceCorrect::with('rests')->findOrFail($id);
         return view('admin.corrects.show', compact('correct'));
     }
 

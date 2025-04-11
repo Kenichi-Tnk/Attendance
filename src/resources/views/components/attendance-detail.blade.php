@@ -37,9 +37,9 @@
             <div class="attendance-block">
                 <label class="attendance-label">出勤・退勤</label>
                 <div class="attendance-value">
-                    <input type="time" class="form-control" id="clock_in" name="clock_in" value="{{ $attendance->clock_in }}">
+                    <input type="time" class="form-control" id="clock_in" name="clock_in" value="{{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                     <span class="mx-2">〜</span>
-                    <input type="time" class="form-control" id="clock_out" name="clock_out" value="{{ $attendance->clock_out }}">
+                    <input type="time" class="form-control" id="clock_out" name="clock_out" value="{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                 </div>
             </div>
             <hr class="divider">
@@ -47,9 +47,9 @@
                 <div class="attendance-block">
                     <div class="attendance-label">{{ $index === 0 ? '休憩' : '休憩' . $index }}</div>
                     <div class="attendance-value">
-                        <input type="time" class="form-control" id="rest_start_{{ $index }}" name="rests[{{ $index }}][rest_start]" value="{{ $rest->rest_start ? \Carbon\Carbon::parse($rest->rest_start)->format('H:i') : '' }}">
+                        <input type="time" class="form-control" id="rest_start_{{ $index }}" name="rests[{{ $index }}][rest_start]" value="{{ $rest->rest_start ? \Carbon\Carbon::parse($rest->rest_start)->format('H:i') : '00:00' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                         <span class="mx-2">〜</span>
-                        <input type="time" class="form-control" id="rest_end_{{ $index }}" name="rests[{{ $index }}][rest_end]" value="{{ $rest->rest_end ? \Carbon\Carbon::parse($rest->rest_end)->format('H:i') : '' }}">
+                        <input type="time" class="form-control" id="rest_end_{{ $index }}" name="rests[{{ $index }}][rest_end]" value="{{ $rest->rest_end ? \Carbon\Carbon::parse($rest->rest_end)->format('H:i') : '00:00' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                     </div>
                 </div>
                 <hr class="divider">
@@ -57,7 +57,9 @@
                 <div class="attendance-block">
                     <div class="attendance-label">休憩</div>
                     <div class="attendance-value">
-                        <p>休憩データがありません</p>
+                        <input type="time" class="form-control" id="rest_start_0" name="rests[0][rest_start]" value="00:00">
+                        <span class="mx-2">〜</span>
+                        <input type="time" class="form-control" id="rest_end_0" name="rests[0][rest_end]" value="00:00">
                     </div>
                 </div>
             @endforelse
@@ -65,7 +67,11 @@
             <div class="attendance-block">
                 <label class="attendance-label">備考</label>
                 <div class="attendance-value">
-                    <textarea class="form-control" id="note" name="note" required>{{ $attendance->note }}</textarea>
+                    @if ($attendance->isPendingApproval())
+                        <div class="form-control-plaintext">{{ $attendance->note }}</div>
+                    @else
+                        <textarea class="form-control" id="note" name="note" required>{{ $attendance->note }}</textarea>
+                    @endif
                 </div>
             </div>
             <div class="form-actions">
