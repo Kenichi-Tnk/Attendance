@@ -3,7 +3,7 @@ main {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -23,6 +23,14 @@ main {
     border-radius: 8px;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 850px) {
+    .pagination {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
 }
 
 .pagination__link {
@@ -88,15 +96,19 @@ main {
     color: black;
 }
 
+.attendance-header,
+.attendance-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
 .attendance-header {
     background-color: #fff; /* 背景色を白に設定 */
     border-radius: 8px; /* 角丸を追加 */
-    padding: 10px 20px; /* 内側の余白を追加 */
     margin-bottom: 10px; /* 下に余白を追加 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し影を追加して立体感を出す */
     font-weight: bold; /* 太字にする */
-    display: flex;
-    justify-content: space-between; /* 均等に配置 */
     align-items: center; /* 垂直方向を中央揃え */
     color: #737373; /* テキストの色を薄いグレーに設定 */
 }
@@ -122,12 +134,17 @@ main {
     background-color: #f9f9f9; /* 背景色を薄いグレーに設定 */
     border: 1px solid #ddd; /* 境界線を追加 */
     border-radius: 8px; /* 角丸を追加 */
-    padding: 10px 20px; /* 内側の余白を追加 */
     margin-bottom: 1px; /* 下に余白を追加 */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 少し影を追加 */
-    display: flex;
-    justify-content: space-between; /* 均等に配置 */
     align-items: center; /* 垂直方向を中央揃え */
+}
+
+@media (max-width: 850px) {
+    .attendance-header,
+    .attendance-row {
+        flex-direction: column; /* 縦並びにする */
+        align-items: flex-start; /* 左揃え */
+    }
 }
 
 .attendance-row a {

@@ -54,11 +54,14 @@ Route::post('admin/logout', [AuthenticatedSessionController::class, 'destroy'])-
 //ユーザー用ルート
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
-    Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
+    //勤怠一覧画面
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('user.attendance.index');
+    //勤怠登録画面
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
-    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
+    //勤怠詳細画面
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('user.attendance.show');
     Route::post('/attendance/{id}/correct', [AttendanceController::class, 'correct'])->name('attendance.correct');
 
     Route::get('/clock', [UserController::class, 'showClockPage'])->name('user.clock');
@@ -66,7 +69,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/attendances/clock-out/{id}', [UserController::class, 'clockOut'])->name('user.clock_out');
     Route::get('/attendances/{id}', [UserController::class, 'getAttendanceDetail'])->name('user.attendance_detail');
     Route::post('/attendances/{id}/request-correction', [UserController::class, 'requestCorrection'])->name('user.request_correction');
-    Route::get('/corrects', [CorrectController::class, 'index'])->name('corrects.index');
+    Route::get('/corrects', [CorrectController::class, 'index'])->name('user.corrects.index');
+    Route::post('/corrects/{id}', [CorrectController::class, 'store'])->name('user.corrects.store');
 
     //申請関連のルート
     Route::resource('corrects', CorrectController::class);
@@ -77,7 +81,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/attendance', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
     Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show'); // 詳細画面ルート
-    Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update'); // 勤怠詳細更新
+    Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update'); // 勤怠詳細更新
     Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
     Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show'); // 仮組みの詳細画面ルート
     Route::get('/admin/staff/{id}/csv', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.csv'); // CSV出力

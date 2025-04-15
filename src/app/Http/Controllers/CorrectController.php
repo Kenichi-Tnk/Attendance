@@ -17,7 +17,7 @@ class CorrectController extends Controller
 
             //dd($requests);
 
-        return view('corrects.index', compact('requests'));
+        return view('user.corrects.index', compact('requests'));
     }
 
     public function create()

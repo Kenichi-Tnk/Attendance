@@ -1,3 +1,9 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .attendance-header {
     display: flex;
     justify-content: space-between; /* タイトルとボタンを左右に配置 */

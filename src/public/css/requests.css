@@ -7,11 +7,10 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
-
 .title {
-    font-size: 24px; /* タイトルのフォントサイズを調整 */
-    font-weight: bold; /* タイトルを太字に */
-    margin: 40px 0;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .tabs {
@@ -22,6 +21,14 @@ body {
     border-bottom: 2px solid #000000;
     padding-bottom: 5px;
     padding-left: 40px
+}
+
+@media (max-width: 850px) {
+    .tabs {
+        flex-wrap: wrap; /* タブを折り返す */
+        gap: 20px; /* タブ間の隙間を調整 */
+        justify-content: center; /* 中央揃え */
+    }
 }
 
 .tab {
@@ -39,27 +46,73 @@ body {
     color: black;
 }
 
-.requests-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 2rem;
+.attendance-header,
+.attendance-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center; /* 中央揃え */
 }
 
-.requests-table th,
-.requests-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+@media (max-width: 850px) {
+    .attendance-header,
+    .attendance-row {
+        flex-direction: column; /* 縦並びにする */
+        align-items: flex-start; /* 左揃え */
+    }
 }
 
-.requests-table th {
-    background-color: #f2f2f2;
+.attendance-header {
+    background-color: #fff; /* 背景色を白に設定 */
+    border-radius: 8px; /* 角丸を追加 */
+    margin-bottom: 10px; /* 下に余白を追加 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し影を追加して立体感を出す */
+    font-weight: bold; /* 太字にする */
+    color: #737373; /* テキストの色を薄いグレーに設定 */
 }
 
-.requests-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.attendance-header span,
+.attendance-row span {
+    flex: 1; /* 各要素を均等に配置 */
+    text-align: center; /* テキストを中央揃え */
 }
 
-.requests-table tr:hover {
-    background-color: #f1f1f1;
+@media (max-width: 850px) {
+    .attendance-header span,
+    .attendance-row span {
+        text-align: left; /* テキストを左揃え */
+        margin-bottom: 5px; /* 各要素の間に余白を追加 */
+    }
+}
+
+.attendance-header span:first-child,
+.attendance-row span:first-child {
+    flex: 1; /* 日付部分を少し広くする */
+}
+
+.attendance-header span:last-child,
+.attendance-row span:last-child {
+    flex: 0.8; /* 詳細部分を少し狭くする */
+}
+
+
+.attendance-row {
+    background-color: #f9f9f9; /* 背景色を薄いグレーに設定 */
+    border: 1px solid #ddd; /* 境界線を追加 */
+    border-radius: 8px; /* 角丸を追加 */
+    margin-bottom: 1px; /* 下に余白を追加 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 少し影を追加 */
+}
+
+.attendance-row a {
+    color: #000; /* リンクの色 */
+    text-decoration: none; /* 下線を削除 */
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.attendance-row a:hover {
+    text-decoration: underline; /* ホバー時に下線を表示 */
 }

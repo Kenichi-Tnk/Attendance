@@ -29,7 +29,7 @@ class AttendanceController extends Controller
             ->get();
 
         // ビューにデータを渡す
-        return view('attendance.index', [
+        return view('user.attendance.index', [
             'attendances' => $attendances,
             'currentMonth' => $currentDate->format('Y年m月'),
             'previousMonth' => $previousMonth,
@@ -40,7 +40,7 @@ class AttendanceController extends Controller
     public function show($id)
     {
         $attendance = Attendance::with('rests')->findOrFail($id);
-        return view('attendance.show', compact('attendance'));
+        return view('user.attendance.detail', compact('attendance'));
     }
 
     public function correct(AttendanceCorrectRequest $request, $id)
@@ -88,7 +88,7 @@ class AttendanceController extends Controller
 
         //当日の勤怠記録を取得
         $attendance = Attendance::where('user_id', Auth::id())->whereDate('date', now()->toDateString())->first();
-        return view('attendance.register', compact('attendance'));
+        return view('user.attendance.register', compact('attendance'));
     }
 
     public function store(Request $request)
