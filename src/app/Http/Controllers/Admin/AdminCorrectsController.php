@@ -18,7 +18,7 @@ class AdminCorrectsController extends Controller
 
     public function show($id)
     {
-        $correct = AttendanceCorrect::with('rests')->findOrFail($id);
+        $correct = AttendanceCorrect::with('attendance.rests')->findOrFail($id);
         return view('admin.corrects.show', compact('correct'));
     }
 
@@ -32,8 +32,6 @@ class AdminCorrectsController extends Controller
             'date' => $correct->date,
             'clock_in' => $correct->clock_in,
             'clock_out' => $correct->clock_out,
-            'rest_start' => $correct->rest_start,
-            'rest_end' => $correct->rest_end,
             'note' => $correct->note,
         ]);
 

@@ -33,6 +33,6 @@ class AttendanceCorrect extends Model
 
     public function rests()
     {
-        return $this->hasMany(Rest::class, 'attendance_id', 'attendance_id');
+        return $this->hasMany(AttendanceRest::class, 'attendance_id', 'attendance_id');
     }
 }

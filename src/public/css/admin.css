@@ -1,11 +1,4 @@
 /* 管理者ページ共通のスタイル */
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 h1 {
     font-size: 30px;
     margin-bottom: 40px;

@@ -15,7 +15,7 @@ html,body {
 @media (max-width: 1540px) {
     .container {
         max-width: 100%;
-        padding: 20px;
+        padding: 20px 300px;
     }
 }
 
