@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/attendance-detail.css') }}">
 @endsection
@@ -64,9 +65,9 @@
                 <div class="attendance-block">
                         <div class="attendance-label">休憩</div>
                         <div class="attendance-value">
-                            <input type="time" class="form-control" id="rest_start_0" name="rests[0][rest_start]" value="00:00" disabled>
+                            <input type="time" class="form-control" id="rest_start_0" name="rests[0][rest_start]" value="00:00">
                             <span class="mx-2">〜</span>
-                            <input type="time" class="form-control" id="rest_end_0" name="rests[0][rest_end]" value="00:00" disabled>
+                            <input type="time" class="form-control" id="rest_end_0" name="rests[0][rest_end]" value="00:00">
                         </div>
                     </div>
             @endforelse
@@ -77,7 +78,7 @@
                     @if ($attendance->isPendingApproval())
                         <div class="form-control-plaintext">{{ $attendance->note }}</div>
                     @else
-                        <textarea class="form-control" id="note" name="note" required>{{ $attendance->note }}</textarea>
+                        <textarea class="form-control" id="note" name="note" required>{{ old('note', $attendance->note) }}</textarea>
                     @endif
                 </div>
             </div>

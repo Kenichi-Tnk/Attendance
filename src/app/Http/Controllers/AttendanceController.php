@@ -40,24 +40,55 @@ class AttendanceController extends Controller
     public function show($id)
     {
         $attendance = Attendance::with('rests')->findOrFail($id);
+
         return view('user.attendance.detail', compact('attendance'));
     }
 
     public function correct(AttendanceCorrectRequest $request, $id)
     {
+        //勤怠データの取得
+        $attendance = Attendance::findOrFail($id);
+
+        //修正申請の作成
         AttendanceCorrect::create([
             'user_id' => auth()->id(),
             'attendance_id' => $id,
             'date' => Attendance::findOrFail($id)->date, // 勤怠データの日付を使用
             'clock_in' => $request->clock_in,
             'clock_out' => $request->clock_out,
-            'rest_start' => $request->rest_start,
-            'rest_end' => $request->rest_end,
             'note' => $request->note,
             'status' => 'pending',
         ]);
 
-        return redirect()->route('attendance.show', $id)->with('success', '修正申請が送信されました。');
+        //休憩データの更新
+        if ($request->has('rests')) {
+            foreach ($request->input('rests') as $index => $rest) {
+                if (!empty($rest['rest_start']) && !empty($rest['rest_end'])) {
+                    $existingRest = $attendance->rests->get($index);
+                    if ($existingRest) {
+                        // 既存の休憩データを更新
+                        $existingRest->update([
+                            'rest_start' => $rest['rest_start'],
+                            'rest_end' => $rest['rest_end'],
+                        ]);
+                    } else {
+                        // 新しい休憩データを作成
+                        $attendance->rests()->create([
+                            'rest_start' => $rest['rest_start'],
+                            'rest_end' => $rest['rest_end'],
+                        ]);
+                    }
+                }
+            }
+        }
+
+        //修正後のデータの再取得
+        $updatedAttendance = Attendance::with('rests')->findOrFail($id);
+
+        return redirect()->route('attendance.show', $id)->with([
+            'success' => '修正申請が送信されました。',
+            'attendance' => $updatedAttendance,
+            ]);
     }
 
     public function create()

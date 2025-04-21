@@ -62,14 +62,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
     //勤怠詳細画面
     Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('user.attendance.show');
+
     Route::post('/attendance/{id}/correct', [AttendanceController::class, 'correct'])->name('attendance.correct');
 
     Route::get('/clock', [UserController::class, 'showClockPage'])->name('user.clock');
+
     Route::post('/attendances/clock-in', [UserController::class, 'clockIn'])->name('user.clock_in');
+
     Route::post('/attendances/clock-out/{id}', [UserController::class, 'clockOut'])->name('user.clock_out');
+
     Route::get('/attendances/{id}', [UserController::class, 'getAttendanceDetail'])->name('user.attendance_detail');
+
     Route::post('/attendances/{id}/request-correction', [UserController::class, 'requestCorrection'])->name('user.request_correction');
+    
     Route::get('/corrects', [CorrectController::class, 'index'])->name('user.corrects.index');
+
     Route::post('/corrects/{id}', [CorrectController::class, 'store'])->name('user.corrects.store');
 
     //申請関連のルート

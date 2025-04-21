@@ -31,7 +31,7 @@ label {
 
 /* タイトルのスタイル */
 h1 {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     text-align: left;
     margin: 50px 0;
@@ -57,6 +57,8 @@ h1 {
     text-align: center;
     height: 50px;
     width: 150px;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .btn-primary:hover {
@@ -64,14 +66,17 @@ h1 {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #696969;
     color: #fff;
     border: none;
-    padding: 10px 50px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: not-allowed;
     display: block;
-    margin: 20px auto;
+    margin: 50px 0;
     text-align: center;
+    height: 50px;
     width: 150px;
+    font-size: 22px;
+    font-weight: bold;
 }
