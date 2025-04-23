@@ -41,6 +41,25 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::with('rests')->findOrFail($id);
 
+        //修正データがある場合修正申請データを優勢的に表示
+        $pendingCorrect = AttendanceCorrect::where('attendance_id', $id)
+            ->where('status', 'pending')
+            ->first();
+
+        if ($pendingCorrect) {
+            $attendance->clock_in = $pendingCorrect->clock_in;
+            $attendance->clock_out = $pendingCorrect->clock_out;
+            $attendance->note = $pendingCorrect->note;
+
+            //休憩データを修正申請データに置き換え
+            $attendance->rests = collect($pendingCorrect->rests->map(function ($rest) {
+                return (object)[
+                    'rest_start' => $rest->rest_start,
+                    'rest_end' => $rest->rest_end,
+                ];
+            }));
+        }
+
         return view('user.attendance.detail', compact('attendance'));
     }
 
@@ -50,45 +69,35 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
 
         //修正申請の作成
-        AttendanceCorrect::create([
+        $attendanceCorrect = AttendanceCorrect::create([
             'user_id' => auth()->id(),
             'attendance_id' => $id,
-            'date' => Attendance::findOrFail($id)->date, // 勤怠データの日付を使用
+            'date' => $attendance->date, // 勤怠データの日付を使用
             'clock_in' => $request->clock_in,
             'clock_out' => $request->clock_out,
             'note' => $request->note,
             'status' => 'pending',
         ]);
 
-        //休憩データの更新
+        //休憩データの保存
         if ($request->has('rests')) {
-            foreach ($request->input('rests') as $index => $rest) {
+            foreach ($request->input('rests') as $rest) {
                 if (!empty($rest['rest_start']) && !empty($rest['rest_end'])) {
-                    $existingRest = $attendance->rests->get($index);
-                    if ($existingRest) {
-                        // 既存の休憩データを更新
-                        $existingRest->update([
-                            'rest_start' => $rest['rest_start'],
-                            'rest_end' => $rest['rest_end'],
-                        ]);
-                    } else {
-                        // 新しい休憩データを作成
-                        $attendance->rests()->create([
-                            'rest_start' => $rest['rest_start'],
-                            'rest_end' => $rest['rest_end'],
-                        ]);
-                    }
+                    $attendanceCorrect->update([
+                        'rest_start' => $rest['rest_start'],
+                        'rest_end' => $rest['rest_end'],
+                    ]);
                 }
             }
         }
 
-        //修正後のデータの再取得
+        //修正後のデータを再取得
         $updatedAttendance = Attendance::with('rests')->findOrFail($id);
 
         return redirect()->route('attendance.show', $id)->with([
             'success' => '修正申請が送信されました。',
             'attendance' => $updatedAttendance,
-            ]);
+        ]);
     }
 
     public function create()

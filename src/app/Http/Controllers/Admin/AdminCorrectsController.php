@@ -35,6 +35,22 @@ class AdminCorrectsController extends Controller
             'note' => $correct->note,
         ]);
 
+        // 休憩データの更新
+        if (!empty($correct->rest_start) && !empty($correct->rest_end)) {
+            $rest = $attendance->rests()->first();
+            if ($rest) {
+                $rest->update([
+                    'rest_start' => $correct->rest_start,
+                    'rest_end' => $correct->rest_end,
+                ]);
+            } else {
+                $attendance->rests()->create([
+                    'rest_start' => $correct->rest_start,
+                    'rest_end' => $correct->rest_end,
+                ]);
+            }
+        }
+
         // 修正申請のステータスを更新
         $correct->update(['status' => 'approved']);
 

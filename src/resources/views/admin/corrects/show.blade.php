@@ -26,7 +26,7 @@
             <span style="margin-left: 75px;">{{ \Carbon\Carbon::parse($correct->clock_out)->format('H:i') }}</span>
         </div>
     </div>
-    @foreach ($correct->attendance->rests as $index => $rest)
+    @forelse ($correct->rests as $index => $rest)
         <div class="form-group">
             <label for="rest_{{ $index }}">休憩{{ $index + 1 }}</label>
             <div class="form-control-plaintext">
@@ -35,7 +35,9 @@
                 <span style="margin-left: 75px;">{{ \Carbon\Carbon::parse($rest->rest_end)->format('H:i') }}</span>
             </div>
         </div>
-    @endforeach
+    @empty
+        <p>休憩データがありません</p>
+    @endforelse
     <div class="form-group">
         <label for="note">備考</label>
         <div class="form-control-plaintext">{{ $correct->note }}</div>
