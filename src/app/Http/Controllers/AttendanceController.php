@@ -40,8 +40,9 @@ class AttendanceController extends Controller
     public function show($id)
     {
         $attendance = Attendance::with('rests')->findOrFail($id);
+        // dd($attendance->rest);
 
-        //修正データがある場合修正申請データを優勢的に表示
+        // 修正申請がある場合は修正申請データを優先的に表示
         $pendingCorrect = AttendanceCorrect::where('attendance_id', $id)
             ->where('status', 'pending')
             ->first();
@@ -51,13 +52,8 @@ class AttendanceController extends Controller
             $attendance->clock_out = $pendingCorrect->clock_out;
             $attendance->note = $pendingCorrect->note;
 
-            //休憩データを修正申請データに置き換え
-            $attendance->rests = collect($pendingCorrect->rests->map(function ($rest) {
-                return (object)[
-                    'rest_start' => $rest->rest_start,
-                    'rest_end' => $rest->rest_end,
-                ];
-            }));
+            // 修正申請の休憩データを使用
+            $attendance->rests = $pendingCorrect->rests;
         }
 
         return view('user.attendance.detail', compact('attendance'));
@@ -83,7 +79,7 @@ class AttendanceController extends Controller
         if ($request->has('rests')) {
             foreach ($request->input('rests') as $rest) {
                 if (!empty($rest['rest_start']) && !empty($rest['rest_end'])) {
-                    $attendanceCorrect->update([
+                    $attendanceCorrect->rests()->create([
                         'rest_start' => $rest['rest_start'],
                         'rest_end' => $rest['rest_end'],
                     ]);
@@ -91,13 +87,7 @@ class AttendanceController extends Controller
             }
         }
 
-        //修正後のデータを再取得
-        $updatedAttendance = Attendance::with('rests')->findOrFail($id);
-
-        return redirect()->route('attendance.show', $id)->with([
-            'success' => '修正申請が送信されました。',
-            'attendance' => $updatedAttendance,
-        ]);
+        return redirect()->route('attendance.show', $id)->with('success' , '修正申請が送信されました。');
     }
 
     public function create()

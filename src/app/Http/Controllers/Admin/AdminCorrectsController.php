@@ -18,37 +18,31 @@ class AdminCorrectsController extends Controller
 
     public function show($id)
     {
-        $correct = AttendanceCorrect::with('attendance.rests')->findOrFail($id);
+        $correct = AttendanceCorrect::with('rests')->findOrFail($id);
+        //dd($correct->rests);
+
         return view('admin.corrects.show', compact('correct'));
     }
 
     public function approve(Request $request, $id)
     {
-        $correct = AttendanceCorrect::findOrFail($id);
+        $correct = AttendanceCorrect::with('rests')->findOrFail($id);
         $attendance = Attendance::findOrFail($correct->attendance_id);
 
          // 勤怠情報を修正申請の内容で更新
         $attendance->update([
-            'date' => $correct->date,
             'clock_in' => $correct->clock_in,
             'clock_out' => $correct->clock_out,
             'note' => $correct->note,
         ]);
 
         // 休憩データの更新
-        if (!empty($correct->rest_start) && !empty($correct->rest_end)) {
-            $rest = $attendance->rests()->first();
-            if ($rest) {
-                $rest->update([
-                    'rest_start' => $correct->rest_start,
-                    'rest_end' => $correct->rest_end,
-                ]);
-            } else {
-                $attendance->rests()->create([
-                    'rest_start' => $correct->rest_start,
-                    'rest_end' => $correct->rest_end,
-                ]);
-            }
+        $attendance->rests()->delete(); //既存の休憩データを削除
+        foreach ($correct->rests as $rest) {
+            $attendance->rests()->create([
+                'rest_start' => $rest->rest_start,
+                'rest_end' => $rest->rest_end,
+            ]);
         }
 
         // 修正申請のステータスを更新

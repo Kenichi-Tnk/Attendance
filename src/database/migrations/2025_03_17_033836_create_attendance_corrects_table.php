@@ -20,8 +20,6 @@ class CreateAttendanceCorrectsTable extends Migration
             $table->date('date'); // 日付
             $table->time('clock_in')->nullable(); // 出勤時間
             $table->time('clock_out')->nullable(); // 退勤時間
-            $table->time('rest_start')->nullable(); // 休憩開始時間
-            $table->time('rest_end')->nullable(); // 休憩終了時間
             $table->text('note')->nullable(); // 備考
             $table->enum('status', ['pending', 'approved'])->default('pending'); // 申請のステータス
             $table->timestamps();

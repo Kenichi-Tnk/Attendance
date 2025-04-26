@@ -15,8 +15,6 @@ class AttendanceCorrect extends Model
         'date',
         'clock_in',
         'clock_out',
-        'rest_start',
-        'rest_end',
         'note',
         'status',
     ];
@@ -33,6 +31,6 @@ class AttendanceCorrect extends Model
 
     public function rests()
     {
-        return $this->hasMany(Rest::class, 'attendance_id', 'attendance_id');
+        return $this->hasMany(AttendanceCorrectRest::class);
     }
 }

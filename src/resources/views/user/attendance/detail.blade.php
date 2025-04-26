@@ -55,9 +55,9 @@
                 <div class="attendance-block">
                     <div class="attendance-label">{{ $index === 0 ? '休憩' : '休憩' . $index }}</div>
                     <div class="attendance-value">
-                        <input type="time" class="form-control" id="rest_start_{{ $index }}" name="rests[{{ $index }}][rest_start]" value="{{ $rest->rest_start ? \Carbon\Carbon::parse($rest->rest_start)->format('H:i') : '00:00' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
+                        <input type="time" class="form-control" id="rest_start_{{ $index }}" name="rests[{{ $index }}][rest_start]" value="{{ $rest->rest_start ? \Carbon\Carbon::parse($rest->rest_start)->format('H:i') : '' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                         <span class="mx-2">〜</span>
-                        <input type="time" class="form-control" id="rest_end_{{ $index }}" name="rests[{{ $index }}][rest_end]" value="{{ $rest->rest_end ? \Carbon\Carbon::parse($rest->rest_end)->format('H:i') : '00:00' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
+                        <input type="time" class="form-control" id="rest_end_{{ $index }}" name="rests[{{ $index }}][rest_end]" value="{{ $rest->rest_end ? \Carbon\Carbon::parse($rest->rest_end)->format('H:i') : '' }}" {{ $attendance->isPendingApproval() ? 'disabled' : '' }}>
                     </div>
                 </div>
                 <hr class="divider">

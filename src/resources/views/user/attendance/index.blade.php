@@ -10,9 +10,9 @@
         <h1 class="title">| 勤怠一覧</h1>
 
         <div class="pagination">
-            <a href="{{ route('user.attendance.index', ['month' => $previousMonth]) }}" class="pagination__link pagination__link--prev">前月</a>
+            <a href="{{ route('user.attendance.list', ['month' => $previousMonth]) }}" class="pagination__link pagination__link--prev">前月</a>
             <span class="pagination__current">{{ $currentMonth }}</span>
-            <a href="{{ route('user.attendance.index', ['month' => $nextMonth]) }}" class="pagination__link pagination__link--next">翌月</a>
+            <a href="{{ route('user.attendance.list', ['month' => $nextMonth]) }}" class="pagination__link pagination__link--next">翌月</a>
         </div>
 
         @foreach ($attendances as $attendance)

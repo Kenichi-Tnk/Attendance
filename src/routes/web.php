@@ -51,15 +51,18 @@ Route::get('admin/login', [AuthenticatedSessionController::class, 'showAdminLogi
 Route::post('admin/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 
-//ユーザー用ルート
+//一般ユーザー用ルート
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attendance', AttendanceController::class);
-    //勤怠一覧画面
-    Route::get('/attendances', [AttendanceController::class, 'index'])->name('user.attendance.index');
+
     //勤怠登録画面
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+    //勤怠一覧画面
+    Route::get('/attendances/list', [AttendanceController::class, 'index'])->name('user.attendance.list');
+
     //勤怠詳細画面
     Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('user.attendance.show');
 
