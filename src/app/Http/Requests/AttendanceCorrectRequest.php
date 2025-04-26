@@ -29,6 +29,8 @@ class AttendanceCorrectRequest extends FormRequest
             'rest_start' => 'nullable|date_format:H:i|before:clock_out|after:clock_in',
             'rest_end' => 'nullable|date_format:H:i|before:clock_out|after:rest_start',
             'note' => 'required|string',
+            'rests.*.rest_start' => 'nullable|date_format:H:i|not_in:00:00',
+            'rests.*.rest_end' => 'nullable|date_format:H:i|not_in:00:00',
         ];
     }
 

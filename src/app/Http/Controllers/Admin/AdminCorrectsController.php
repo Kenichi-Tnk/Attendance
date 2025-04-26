@@ -39,10 +39,12 @@ class AdminCorrectsController extends Controller
         // 休憩データの更新
         $attendance->rests()->delete(); //既存の休憩データを削除
         foreach ($correct->rests as $rest) {
-            $attendance->rests()->create([
-                'rest_start' => $rest->rest_start,
-                'rest_end' => $rest->rest_end,
-            ]);
+            if ($rest->rest_start !== '00:00' && $rest_end !== '00:00') {
+                $attendance->rests()->create([
+                    'rest_start' => $rest->rest_start,
+                    'rest_end' => $rest->rest_end,
+                ]);
+            }
         }
 
         // 修正申請のステータスを更新
