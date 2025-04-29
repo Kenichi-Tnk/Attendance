@@ -69,6 +69,12 @@
 
     ブラウザで `http://localhost` にアクセスしてアプリケーションを確認します。
 
+## テーブル仕様書
+![users_table](./docs/users.png)
+![attendances](./docs/attendances.png)
+![rests](./docs/rests.png)
+![attendance_corrects](./docs/attendance_corrects.png)
+![attendance_correct_rests](./docs/attendance_correct_rests.png)
 ## テストユーザー
 
 ### 一般ユーザー

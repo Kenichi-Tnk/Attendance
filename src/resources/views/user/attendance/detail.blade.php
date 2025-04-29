@@ -78,7 +78,7 @@
                     @if ($attendance->isPendingApproval())
                         <div class="form-control-plaintext">{{ $attendance->note }}</div>
                     @else
-                        <textarea class="form-control" id="note" name="note" required>{{ old('note', $attendance->note) }}</textarea>
+                        <textarea class="form-control" id="note" name="note">{{ old('note', $attendance->note) }}</textarea>
                     @endif
                 </div>
             </div>
