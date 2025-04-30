@@ -18,7 +18,7 @@
             <span>{{ $user->name }}</span>
             <span>{{ $user->email }}</span>
             <span>
-                <a href="{{ route('admin.staff.show', $user->id) }}" class="btn btn-primary">詳細</a>
+                <a href="{{ route('admin.staff.show', $user->id) }}">詳細</a>
             </span>
         </div>
     @endforeach

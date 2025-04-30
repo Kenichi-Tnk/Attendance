@@ -1,4 +1,11 @@
 # Attendance
+## URL
+
+- 環境開発: http://localhost/
+- phpMyAdmin: http://localhost:8080
+- MailHog: http://localhost:8025
+
+
 ## 機能
 
 ### 一般ユーザー
@@ -31,7 +38,7 @@
 1. リポジトリをクローンします。
 
     ```sh
-    git clone
+    git@github.com:Kenichi-Tnk/Attendance.git
 
     ```
 

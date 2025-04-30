@@ -15,6 +15,15 @@
             <a href="{{ route('user.attendance.list', ['month' => $nextMonth]) }}" class="pagination__link pagination__link--next">翌月</a>
         </div>
 
+        <div class="attendance-header">
+        <span>日付</span>
+        <span>出勤</span>
+        <span>退勤</span>
+        <span>休憩</span>
+        <span>合計</span>
+        <span>詳細</span>
+        </div>
+
         @foreach ($attendances as $attendance)
             <div class="attendance-row">
                 <span>{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][\Carbon\Carbon::parse($attendance->date)->dayOfWeek] }})</span>
