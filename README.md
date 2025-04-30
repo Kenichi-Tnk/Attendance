@@ -77,7 +77,7 @@
 ![attendance_correct_rests](./docs/attendance_correct_rests.png)
 
 ## ER図
-![ER図](./docs/.drawlo.png)
+![ER図](./docs/.drawio.png)
 
 ## テストユーザー
 
