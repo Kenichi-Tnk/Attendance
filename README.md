@@ -6,7 +6,11 @@
 - MailHog: http://localhost:8025
 
 
-## 機能
+## 実装機能
+
+- ログイン機能（一般ユーザー・管理者ユーザー）
+- ユーザー登録機能（一般ユーザー）
+- メール認証機能
 
 ### 一般ユーザー
 
@@ -25,13 +29,27 @@
 - 修正申請一覧の確認
 - 修正申請の詳細確認・承認
 
-## セットアップ
+## 使用技術 （実行環境）
 
-### 前提条件
+- Laravel: 8.83.8
+- PHP: 7.4.9
+- MYSQL: 8.0.26
+- nginx: 1.21.1
 
-- PHP 7.4以上
-- Composer
-- MySQL
+## 環境構築
+
+### Dockerのビルド
+
+- docker-compose up -d --build
+- macユーザーの方はdocker-compose.ymlに
+mysql:
+      platform: linux/amd64
+
+phpmyadmin:
+      platform: linux/amd64
+
+mailhog:
+      platform: linux/amd64  を追加してください。
 
 ### インストール
 
@@ -45,6 +63,8 @@
 2. 依存関係をインストールします。
 
     ```sh
+    docker-compose exec php bash
+
     composer install
     ```
 
@@ -68,13 +88,19 @@
     php artisan migrate:fresh --seed
     ```
 
-6. ローカル開発サーバーを起動します。
+## メール環境設定
 
-    ```sh
-    php artisan serve
-    ```
+- 本プロジェクトでは、開発環境でのメール送信にMailHogを使用しています。以下の設定を`.env`ファイルに追加してください：
+    ```env
+    MAIL_MAILER=smtp
+    MAIL_HOST=mailhog
+    MAIL_PORT=1025
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null
+    MAIL_FROM_ADDRESS="noreply@example.com"
+    MAIL_FROM_NAME="${APP_NAME}"
 
-    ブラウザで `http://localhost` にアクセスしてアプリケーションを確認します。
 
 ## テーブル仕様書
 ![users_table](./docs/users.png)
