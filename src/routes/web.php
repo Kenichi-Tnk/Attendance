@@ -77,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendances/{id}', [UserController::class, 'getAttendanceDetail'])->name('user.attendance_detail');
 
     Route::post('/attendances/{id}/request-correction', [UserController::class, 'requestCorrection'])->name('user.request_correction');
-    
+
     Route::get('/corrects', [CorrectController::class, 'index'])->name('user.corrects.index');
 
     Route::post('/corrects/{id}', [CorrectController::class, 'store'])->name('user.corrects.store');
@@ -90,15 +90,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/attendance', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
-    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show'); // 詳細画面ルート
-    Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update'); // 勤怠詳細更新
+
+    // 詳細画面ルート
+    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
+
+    // 勤怠詳細更新ルート
+    Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update');
+
+    // スタッフ表示画面ルート
     Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
-    Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show'); // 仮組みの詳細画面ルート
-    Route::get('/admin/staff/{id}/csv', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.csv'); // CSV出力
-    Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');//修正申請一覧
-    Route::get('/admin/corrects/{id}', [AdminCorrectsController::class, 'show'])->name('admin.corrects.show');//修正申請詳細
-    Route::post('/admin/corrects/{id}/approve', [AdminCorrectsController::class, 'approve'])->name('admin.corrects.approve');//修正申請承認
-    // 他の管理者用ルートを追加
+
+    // スタッフ詳細画面ルート
+    Route::get('/admin/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.staff.show');
+
+    // CSV出力
+    Route::get('/admin/staff/{id}/csv', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.csv');
+
+    // 修正申請一覧画面ルート
+    Route::get('/admin/corrects', [AdminCorrectsController::class, 'index'])->name('admin.corrects.index');
+
+    // 修正申請詳細画面ルート
+    Route::get('/admin/corrects/{id}', [AdminCorrectsController::class, 'show'])->name('admin.corrects.show');
+
+    // 修正申請承認ルート
+    Route::post('/admin/corrects/{id}/approve', [AdminCorrectsController::class, 'approve'])->name('admin.corrects.approve');
 });
 
 // メール送信テストのルート

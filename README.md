@@ -81,11 +81,14 @@ mailhog:
     ```sh
     php artisan key:generate
     ```
+    ```sh
+    php artisan db:seed
+    ```
 
 5. データベースをマイグレーションしてシーディングします。
 
     ```sh
-    php artisan migrate:fresh --seed
+    php artisan migrate
     ```
 
 ## メール環境設定
@@ -102,7 +105,61 @@ mailhog:
     MAIL_FROM_NAME="${APP_NAME}"
 
 
-## テーブル仕様書
+## 基本設計
+## Model
+### User.php
+- **説明**: ユーザー情報を管理するモデル。一般ユーザーや管理者ユーザーのデータを保持し、認証や権限管理に使用されます。
+
+### Attendance.php
+- **説明**: 勤怠情報を管理するモデル。出勤・退勤時間、日付などのデータを保持し、ユーザーの勤怠記録を管理します。
+
+### AttendanceCorrect.php
+- **説明**: 勤怠修正申請を管理するモデル。ユーザーが提出した勤怠修正の内容やステータスを保持します。
+
+### AttendanceCorrectRest.php
+- **説明**: 勤怠修正申請に関連する休憩時間を管理するモデル。修正申請に含まれる休憩時間のデータを保持します。
+
+## View
+## 会員登録画面(一般ユーザー)
+- **bladeファイル名**:auth/register.blade.php
+
+## ログイン画面(一般ユーザー)
+- **bladeファイル名**: auth/login.blade.php
+
+## 出勤登録画面(一般ユーザー)
+- **bladeファイル名**:user/attendance/register.blade.php
+
+## 勤怠一覧画面(一般ユーザー)
+- **bladeファイル名**: user/attendance/index.blade.php
+
+## 勤怠詳細画面(一般ユーザー)
+- **bladeファイル名**: user/attendance/detail.blade.php
+
+## 申請一覧画面(一般ユーザー)
+- **bladeファイル名**: user/corrects/index.blade.php
+
+## ログイン画面(管理者)
+- **bladeファイル名**: auth/admin-login.blade.php
+
+## 勤怠一覧画面(管理者)
+- **bladeファイル名**: admin/attendance/index.blade.php
+
+## 勤怠詳細画面(管理者)
+- **bladeファイル名**: admin/attendance/detail.blade.php
+
+## スタッフ一覧画面(管理者)
+- **bladeファイル名**: admin/staff/index.blade.php
+
+## スタッフ別勤怠一覧画面(管理者)
+- **bladeファイル名**: admin/staff/show.blade.php
+
+## 申請一覧画面(管理者)
+- **bladeファイル名**: admin/corrects/index.blade.php
+
+## 修正申請承認画面(管理者)
+- **bladeファイル名**: admin/corrects/show.blade.php
+
+## テーブル仕様
 ![users_table](./docs/users.png)
 ![attendances](./docs/attendances.png)
 ![rests](./docs/rests.png)
