@@ -1,0 +1,113 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.attendance-header {
+    display: flex;
+    justify-content: space-between; /* タイトルとボタンを左右に配置 */
+    align-items: center; /* 垂直方向を中央揃え */
+    margin-bottom: 20px; /* 下に余白を追加 */
+}
+
+.title {
+    font-size: 24px; /* タイトルのフォントサイズを調整 */
+    font-weight: bold; /* タイトルを太字に */
+    margin: 0;
+}
+
+.attendance-detail {
+    max-width: 100%; /* 幅を画面全体に広げる */
+    margin: 0 auto; /* 中央寄せ */
+    padding: 20px; /* 内側の余白 */
+    border-radius: 8px; /* 角丸 */
+    box-sizing: border-box; /* パディングを含めて幅を計算 */
+}
+
+.attendance-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 25px 40px;
+}
+
+.attendance-label {
+    font-weight: bold;
+    width: 20%;
+    text-align: left;
+    margin-left: 30px;
+    margin-right: 10px;
+    color: gray;
+}
+
+.attendance-value input[type="time"] {
+    font-size: 18px;
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.attendance-value {
+    display: flex;
+    width: 65%;
+    gap: 40px;
+    align-items:center;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.attendance-value span {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.attendance-value textarea {
+    font-size: 16px;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2px 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 90px;
+    margin-right: 20px;
+}
+
+.btn-primary {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+    padding: 10px 50px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+

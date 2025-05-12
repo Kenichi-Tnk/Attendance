@@ -1,0 +1,102 @@
+body {
+    background-color: #f0eff2;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem; /* 上に寄せるためのパディングを追加 */
+    padding-bottom: 20rem; /* 必要に応じて下にもパディングを追加 */
+}
+
+.attendance-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attendance-info__status {
+    font-size: 1rem; /* 小 */
+    margin: 0.5rem 0;
+    background-color: #d1cfcf;
+    color: #333;
+    padding: 5px 20px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+}
+
+.attendance-info__date {
+    font-size: 2rem; /* 中 */
+    margin: 0.5rem 0;
+}
+
+.attendance-info__time {
+    font-size: 3.5rem; /* 大 */
+    margin: 0.5rem 0;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-content__button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-content__button {
+    flex: none;
+    width: 150px;
+}
+
+.form-content__button-submit--black {
+    padding: 1rem;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 150px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-content__button-submit--white {
+    padding: 1rem;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 150px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-content__button-submit:hover {
+    background-color: #333;
+}
+
+.attendance-info__finished {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 2rem;
+}

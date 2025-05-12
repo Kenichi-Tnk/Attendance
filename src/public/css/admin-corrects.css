@@ -1,0 +1,82 @@
+/* 全体のスタイル */
+.form-group {
+    margin-bottom: 1px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 25px 70px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+label {
+    font-weight: bold;
+    color: #737373;
+    flex: 1;
+    text-align: left;
+    margin: 0;
+}
+
+.form-control-plaintext {
+    font-size: 16px;
+    color: #000000;
+    flex: 2;
+    text-align: left;
+    background-color: transparent;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+/* タイトルのスタイル */
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
+    margin: 50px 0;
+    color: #333;
+}
+
+/* ボタンのスタイル */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 5px;
+}
+.btn-primary {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 10px 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 50px auto;
+    text-align: center;
+    height: 50px;
+    width: 150px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #333333;
+}
+
+.btn-secondary {
+    background-color: #696969;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: not-allowed;
+    display: block;
+    margin: 50px 0;
+    text-align: center;
+    height: 50px;
+    width: 150px;
+    font-size: 22px;
+    font-weight: bold;
+}
