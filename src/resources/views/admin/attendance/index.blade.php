@@ -2,13 +2,17 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 @endsection
 
 @section('content')
-    <h1> <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($date)->format('Y年m月d日') }}の勤怠</h1>
+    <h1> | {{ \Carbon\Carbon::parse($date)->format('Y年m月d日') }}の勤怠</h1>
     <div class="pagination">
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->subDay()->toDateString()]) }}" class="pagination__link pagination__link--prev">前日</a>
-        <span class="current-date">{{ \Carbon\Carbon::parse($date)->format('Y/m/d') }}</span>
+        <span class="current-date">
+            <i class="fas fa-calendar-alt" style="margin-right:8px;"></i>
+            {{ \Carbon\Carbon::parse($date)->format('Y/m/d') }}
+        </span>
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->addDay()->toDateString()]) }}" class="pagination__link pagination__link--next">翌日</a>
     </div>
     <div class="attendance-header">

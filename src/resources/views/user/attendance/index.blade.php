@@ -11,7 +11,10 @@
 
         <div class="pagination">
             <a href="{{ route('user.attendance.list', ['month' => $previousMonth]) }}" class="pagination__link pagination__link--prev">前月</a>
-            <span class="pagination__current">{{ $currentMonth }}</span>
+            <span class="pagination__current">
+                <i class="fas fa-calendar-alt" style="margin-right: 6px;"></i>
+                {{ $currentMonth }}
+            </span>
             <a href="{{ route('user.attendance.list', ['month' => $nextMonth]) }}" class="pagination__link pagination__link--next">翌月</a>
         </div>
 
