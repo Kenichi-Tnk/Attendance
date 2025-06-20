@@ -23,14 +23,17 @@
         <span>合計</span>
         <span>詳細</span>
     </div>
-        @foreach($attendances as $attendance)
+        @foreach($staffs as $staff)
+            @php
+                $attendance = $attendances->get($staff->id);
+            @endphp
             <div class="attendance-row">
-                <span>{{ $attendance->user->name }}</span>
-                <span>{{ $attendance->clock_in }}</span>
-                <span>{{ $attendance->clock_out }}</span>
-                <span>{{ $attendance->rest_time }}</span>
-                <span>{{ $attendance->total_time }}</span>
-                <span><a href="{{ route('admin.attendance.show', $attendance->id) }}" class="btn btn-primary">詳細</a></span>
+                <span>{{ $staff->name }}</span>
+                <span>{{ $attendance && $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '00:00' }}</span>
+                <span>{{ $attendance && $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->rest_time : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->total_time : '00:00'}}</span>
+                <span><a href="{{ route('admin.attendance.show', $attendance ? $attendance->id : 0) }}" class="btn btn-primary">詳細</a></span>
             </div>
         @endforeach
 @endsection

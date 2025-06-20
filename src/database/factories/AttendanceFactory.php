@@ -17,10 +17,11 @@ class AttendanceFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id, //既存ユーザーからランダムに選択
-            'date' => $this->faker->date(),
-            'clock_in' => $this->faker->time('H:i:s'),
-            'clock_out' => $this->faker->time('H:i:s'),
+            'user_id' => User::inRandomOrder()->first()->id,
+            'date' => $this->faker->date('Y-m-d', '2025-05-31'),
+            'clock_in' => '09:00',
+            'clock_out' => '18:00',
+            // rest_timeやtotal_timeは不要（別テーブル管理の場合）
         ];
     }
 }

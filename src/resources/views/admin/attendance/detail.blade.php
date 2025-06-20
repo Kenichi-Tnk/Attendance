@@ -68,11 +68,14 @@
                     </div>
                 </div>
             @endforelse
+            @if ($errors->has('rests'))
+                <div class="error">{{ $errors->first('rests') }}</div>
+            @endif
             <hr class="divider">
             <div class="attendance-block">
                 <label class="attendance-label">備考</label>
                 <div class="attendance-value">
-                    <textarea class="form-control" id="note" name="note" required>{{ $attendance->note }}</textarea>
+                    <textarea class="form-control" id="note" name="note">{{ old('note', $attendance->note) }}</textarea>
                 </div>
             </div>
             <div class="form-actions">

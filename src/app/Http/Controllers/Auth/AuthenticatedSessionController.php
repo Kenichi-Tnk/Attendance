@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
                 } else {
                     Auth::logout();
                     return redirect()->route('admin.login')->withErrors([
-                        'email' => '管理者として認証されていません。',
+                        'email' => 'ログイン情報が登録されていません',
                     ]);
                 }
             }

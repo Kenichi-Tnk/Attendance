@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 
@@ -11,8 +12,24 @@ class AdminAttendanceController extends Controller
     public function index(Request $request)
     {
         $date = $request->input('date', now()->toDateString());
-        $attendances = Attendance::whereDate('date', $date)->get();
-        return view('admin.attendance.index', compact('attendances', 'date'));
+        $today = now()->toDateString();
+        $staffs = User::where('is_admin', false)->get();
+
+        foreach ($staffs as $staff) {
+            Attendance::firstOrCreate(
+                ['user_id' => $staff->id, 'date' => $today],
+                [
+                    'clock_in' => null,
+                    'clock_out' => null,
+                    'rest_time' => '00:00',
+                    'total_time' => '00:00'
+                ]
+                );
+        }
+
+        $attendances = Attendance::where('date', $date)->get()->keyBy('user_id');
+
+        return view('admin.attendance.index', compact('date', 'staffs', 'attendances'));
     }
 
     public function show($id)
@@ -36,6 +53,26 @@ class AdminAttendanceController extends Controller
             'rest_end.after' => '休憩終了時間が勤務時間外です。',
             'note.required' => '備考を記入してください。',
         ]);
+
+        // 休憩時間合計が勤務時間を超えていないかチェック
+        $clockIn = strtotime($request->input('clock_in'));
+        $clockOut = strtotime($request->input('clock_out'));
+        if ($request->has('rests')) {
+            foreach ($request->input('rests') as $rest) {
+                if (!empty($rest['rest_start'])) {
+                $restStart = strtotime($rest['rest_start']);
+                if ($restStart < $clockIn || $restStart > $clockOut) {
+                    return back()->withErrors(['rests' => '休憩開始時間が勤務時間外です'])->withInput();
+                }
+            }
+            if (!empty($rest['rest_end'])) {
+                $restEnd = strtotime($rest['rest_end']);
+                if ($restEnd < $clockIn || $restEnd > $clockOut) {
+                    return back()->withErrors(['rests' => '休憩終了時間が勤務時間外です'])->withInput();
+                }
+            }
+            }
+        }
 
         $attendance = Attendance::findOrFail($id);
 
