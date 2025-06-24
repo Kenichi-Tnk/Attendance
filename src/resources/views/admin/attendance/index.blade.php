@@ -25,15 +25,17 @@
     </div>
         @foreach($staffs as $staff)
             @php
-                $attendance = $attendances->get($staff->id);
+                $attendance = $attendances->firstWhere('user_id', $staff->id);
             @endphp
             <div class="attendance-row">
                 <span>{{ $staff->name }}</span>
-                <span>{{ $attendance && $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '00:00' }}</span>
-                <span>{{ $attendance && $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->clock_in : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->clock_out : '00:00' }}</span>
                 <span>{{ $attendance ? $attendance->rest_time : '00:00' }}</span>
                 <span>{{ $attendance ? $attendance->total_time : '00:00'}}</span>
-                <span><a href="{{ route('admin.attendance.show', $attendance ? $attendance->id : 0) }}" class="btn btn-primary">詳細</a></span>
+                <span>
+                <a href="{{ route('admin.attendance.detail', ['user_id' => $staff->id, 'date' => $date]) }}" class="btn btn-primary">詳細</a>
+                </span>
             </div>
         @endforeach
 @endsection

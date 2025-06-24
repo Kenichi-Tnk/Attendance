@@ -12,24 +12,47 @@ class AdminAttendanceController extends Controller
     public function index(Request $request)
     {
         $date = $request->input('date', now()->toDateString());
-        $today = now()->toDateString();
         $staffs = User::where('is_admin', false)->get();
+        $attendances = Attendance::whereDate('date', $date)->get();
+        return view('admin.attendance.index', compact('staffs', 'attendances', 'date'));
+    }
 
-        foreach ($staffs as $staff) {
-            Attendance::firstOrCreate(
-                ['user_id' => $staff->id, 'date' => $today],
-                [
-                    'clock_in' => null,
-                    'clock_out' => null,
-                    'rest_time' => '00:00',
-                    'total_time' => '00:00'
-                ]
-                );
+    public function detail($user_id, $date)
+    {
+        $attendance = Attendance::where('user_id', $user_id)->where('date', $date)->first();
+        $staff = User::findOrFail($user_id);
+        return view('admin.attendance.detail', compact('attendance', 'staff', 'date'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'date' => 'required|date',
+            'clock_in' => 'required|date_format:H:i',
+            'clock_out' => 'required|date_format:H:i|after:clock_in',
+            'note' => 'required|string',
+        ]);
+        $attendance = Attendance::create([
+            'user_id' => $request->user_id,
+            'date' => $request->date,
+            'clock_in' => $request->clock_in,
+            'clock_out' => $request->clock_out,
+            'note' => $request->note,
+        ]);
+
+        if ($request->has('rests')) {
+            foreach ($request->rests as $rest) {
+                if (!empty($rest['rest_start']) && !empty($rest['rest_end'])) {
+                    $attendance->rests()->create([
+                        'rest_start' => $rest['rest_start'],
+                        'rest_end' => $rest['rest_end'],
+                    ]);
+                }
+            }
         }
 
-        $attendances = Attendance::where('date', $date)->get()->keyBy('user_id');
-
-        return view('admin.attendance.index', compact('date', 'staffs', 'attendances'));
+        return redirect()->route('admin.attendance.detail', [$attendance->user_id, $attendance->date])->with('success', '勤怠情報が登録されました。');
     }
 
     public function show($id)
@@ -83,11 +106,14 @@ class AdminAttendanceController extends Controller
             'note' => $request->input('note'),
         ]);
 
-        // 休憩時間の更新
+        // 休憩時間の削除
+        $attendance->rests()->delete();
+
+        // 休憩時間の再登録
         if ($request->has('rests')) {
-            foreach ($request->input('rests') as $index => $rest) {
-                if (isset($attendance->rests[$index])) {
-                    $attendance->rests[$index]->update([
+            foreach ($request->input('rests') as $rest) {
+                if (!empty($rest['rest_start']) && !empty($rest['rest_end'])) {
+                    $attendance->rests()->create([
                         'rest_start' =>$rest['rest_start'],
                         'rest_end' => $rest['rest_end'],
                     ]);
@@ -95,6 +121,6 @@ class AdminAttendanceController extends Controller
             }
         }
 
-        return redirect()->route('admin.attendance.show', $attendance->id)->with('success', '勤怠情報が更新されました。');
+        return redirect()->route('admin.attendance.detail', $attendance->id, $attendance->date)->with('success', '勤怠情報が更新されました。');
     }
 }
