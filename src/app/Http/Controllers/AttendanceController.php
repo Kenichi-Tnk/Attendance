@@ -15,25 +15,32 @@ class AttendanceController extends Controller
     {
         // 現在の月を取得（クエリパラメータがない場合は今月）
         $currentMonth = $request->input('month', now()->format('Y-m'));
-
-        // Carbonを使用して前月と翌月を計算
         $currentDate = \Carbon\Carbon::createFromFormat('Y-m', $currentMonth);
-        $previousMonth = $currentDate->copy()->subMonth()->format('Y-m');
-        $nextMonth = $currentDate->copy()->addMonth()->format('Y-m');
 
-        // 現在の月の勤怠データを取得
+        // 月初・月末の前日付を取得
+        $startOfMonth = $currentDate->copy()->startOfMonth();
+        $endOfMonth = $currentDate->copy()->endOfMonth();
+
+        // その月の全日付配列を作成
+        $dates = [];
+        for ($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay()) {
+            $dates[] = $date->format('Y-m-d');
+        }
+
+        // 現在の月の勤怠データを取得 (dateをキーにする)
         $attendances = Attendance::with('rests')
             ->where('user_id', Auth::id())
-            ->whereYear('date', $currentDate->year)
-            ->whereMonth('date', $currentDate->month)
-            ->get();
+            ->whereBetween('date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])
+            ->get()
+            ->keyBy('date');
 
         // ビューにデータを渡す
         return view('user.attendance.index', [
+            'dates' => $dates,
             'attendances' => $attendances,
             'currentMonth' => $currentDate->format('Y年m月'),
-            'previousMonth' => $previousMonth,
-            'nextMonth' => $nextMonth,
+            'previousMonth' => $currentDate->copy()->subMonth()->format('Y-m'),
+            'nextMonth' => $currentDate->copy()->addMonth()->format('Y-m'),
         ]);
     }
 
