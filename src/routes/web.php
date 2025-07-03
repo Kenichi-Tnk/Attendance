@@ -85,6 +85,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // 詳細画面ルート
     Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
 
+    // 勤怠登録画面ルート
+    Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'detail'])->name('admin.attendance.detail');
+
+    // 勤怠登録ルート
+    Route::post('/admin/attendance/store', [AdminAttendanceController::class, 'store'])->name('admin.attendance.store');
+
     // 勤怠詳細更新ルート
     Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update');
 

@@ -2,13 +2,17 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 @endsection
 
 @section('content')
-    <h1> <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($date)->format('Y年m月d日') }}の勤怠</h1>
+    <h1> | {{ \Carbon\Carbon::parse($date)->format('Y年m月d日') }}の勤怠</h1>
     <div class="pagination">
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->subDay()->toDateString()]) }}" class="pagination__link pagination__link--prev">前日</a>
-        <span class="current-date">{{ \Carbon\Carbon::parse($date)->format('Y/m/d') }}</span>
+        <span class="current-date">
+            <i class="fas fa-calendar-alt" style="margin-right:8px;"></i>
+            {{ \Carbon\Carbon::parse($date)->format('Y/m/d') }}
+        </span>
         <a href="{{ route('admin.attendance.index', ['date' => \Carbon\Carbon::parse($date)->addDay()->toDateString()]) }}" class="pagination__link pagination__link--next">翌日</a>
     </div>
     <div class="attendance-header">
@@ -19,14 +23,19 @@
         <span>合計</span>
         <span>詳細</span>
     </div>
-        @foreach($attendances as $attendance)
+        @foreach($staffs as $staff)
+            @php
+                $attendance = $attendances->firstWhere('user_id', $staff->id);
+            @endphp
             <div class="attendance-row">
-                <span>{{ $attendance->user->name }}</span>
-                <span>{{ $attendance->clock_in }}</span>
-                <span>{{ $attendance->clock_out }}</span>
-                <span>{{ $attendance->rest_time }}</span>
-                <span>{{ $attendance->total_time }}</span>
-                <span><a href="{{ route('admin.attendance.show', $attendance->id) }}" class="btn btn-primary">詳細</a></span>
+                <span>{{ $staff->name }}</span>
+                <span>{{ $attendance ? $attendance->clock_in : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->clock_out : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->rest_time : '00:00' }}</span>
+                <span>{{ $attendance ? $attendance->total_time : '00:00'}}</span>
+                <span>
+                <a href="{{ route('admin.attendance.detail', ['user_id' => $staff->id, 'date' => $date]) }}" class="btn btn-primary">詳細</a>
+                </span>
             </div>
         @endforeach
 @endsection

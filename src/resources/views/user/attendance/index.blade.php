@@ -11,7 +11,10 @@
 
         <div class="pagination">
             <a href="{{ route('user.attendance.list', ['month' => $previousMonth]) }}" class="pagination__link pagination__link--prev">前月</a>
-            <span class="pagination__current">{{ $currentMonth }}</span>
+            <span class="pagination__current">
+                <i class="fas fa-calendar-alt" style="margin-right: 6px;"></i>
+                {{ $currentMonth }}
+            </span>
             <a href="{{ route('user.attendance.list', ['month' => $nextMonth]) }}" class="pagination__link pagination__link--next">翌月</a>
         </div>
 
@@ -24,15 +27,18 @@
         <span>詳細</span>
         </div>
 
-        @foreach ($attendances as $attendance)
+        @foreach ($dates as $date)
+            @php
+                $attendance = $attendances[$date] ?? null;
+            @endphp
             <div class="attendance-row">
-                <span>{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][\Carbon\Carbon::parse($attendance->date)->dayOfWeek] }})</span>
-                <span>{{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}</span>
-                <span>{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}</span>
-                <span>{{ $attendance->rest_time }}</span>
-                <span>{{ $attendance->total_time }}</span>
+                <span>{{ \Carbon\Carbon::parse($date)->format('n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][\Carbon\Carbon::parse($date)->dayOfWeek] }})</span>
+                <span>{{ $attendance ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
+                <span>{{ $attendance ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
+                <span>{{ $attendance ? $attendance->rest_time : '' }}</span>
+                <span>{{ $attendance ? $attendance->total_time : '' }}</span>
                 <span>
-                    <a href="{{ route('attendance.show', $attendance->id) }}">詳細</a>
+                    <a href="{{ $attendance ? route('attendance.show', $attendance->id) : route('attendance.create', ['date' => $date]) }}">詳細</a>
                 </span>
             </div>
         @endforeach
